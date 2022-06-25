@@ -89,9 +89,11 @@
   int fcall_idx = -1;
   int lab_num = -1;
   int abs_num = 0;
+  int mod_num = 0;
+  int fac_num = 0;
   FILE *output;
 
-#line 95 "micko.tab.c"
+#line 97 "micko.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -168,12 +170,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "micko.y"
+#line 28 "micko.y"
 
   int i;
   char *s;
 
-#line 177 "micko.tab.c"
+#line 179 "micko.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -550,11 +552,11 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    61,    61,    69,    70,    75,    74,   100,   102,   112,
-     111,   121,   122,   126,   136,   137,   141,   142,   143,   144,
-     148,   152,   165,   166,   173,   184,   185,   195,   197,   202,
-     208,   214,   215,   221,   222,   226,   229,   235,   234,   254,
-     256,   268,   271,   277,   282,   276,   295,   305
+       0,    63,    63,    71,    72,    77,    76,   102,   104,   114,
+     113,   123,   124,   128,   138,   139,   143,   144,   145,   146,
+     150,   154,   167,   168,   175,   188,   189,   199,   201,   207,
+     213,   219,   220,   226,   231,   241,   244,   250,   249,   269,
+     271,   283,   286,   292,   297,   291,   310,   320
 };
 #endif
 
@@ -1395,16 +1397,16 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 62 "micko.y"
+#line 64 "micko.y"
       {  
         if(lookup_symbol("main", FUN) == NO_INDEX)
           err("undefined reference to 'main'");
       }
-#line 1404 "micko.tab.c"
+#line 1406 "micko.tab.c"
     break;
 
   case 5:
-#line 75 "micko.y"
+#line 77 "micko.y"
       {
         fun_idx = lookup_symbol((yyvsp[0].s), FUN);
         if(fun_idx == NO_INDEX)
@@ -1416,11 +1418,11 @@ yyreduce:
         code("\n\t\tPUSH\t%%14");
         code("\n\t\tMOV \t%%15,%%14");
       }
-#line 1420 "micko.tab.c"
+#line 1422 "micko.tab.c"
     break;
 
   case 6:
-#line 87 "micko.y"
+#line 89 "micko.y"
       {
         clear_symbols(fun_idx + 1);
         var_num = 0;
@@ -1430,48 +1432,48 @@ yyreduce:
         code("\n\t\tPOP \t%%14");
         code("\n\t\tRET");
       }
-#line 1434 "micko.tab.c"
+#line 1436 "micko.tab.c"
     break;
 
   case 7:
-#line 100 "micko.y"
+#line 102 "micko.y"
       { set_atr1(fun_idx, 0); }
-#line 1440 "micko.tab.c"
+#line 1442 "micko.tab.c"
     break;
 
   case 8:
-#line 103 "micko.y"
+#line 105 "micko.y"
       {
         insert_symbol((yyvsp[0].s), PAR, (yyvsp[-1].i), 1, NO_ATR);
         set_atr1(fun_idx, 1);
         set_atr2(fun_idx, (yyvsp[-1].i));
       }
-#line 1450 "micko.tab.c"
+#line 1452 "micko.tab.c"
     break;
 
   case 9:
-#line 112 "micko.y"
+#line 114 "micko.y"
       {
         if(var_num)
           code("\n\t\tSUBS\t%%15,$%d,%%15", 4*var_num);
         code("\n@%s_body:", get_name(fun_idx));
       }
-#line 1460 "micko.tab.c"
+#line 1462 "micko.tab.c"
     break;
 
   case 13:
-#line 127 "micko.y"
+#line 129 "micko.y"
       {
         if(lookup_symbol((yyvsp[-1].s), VAR|PAR) == NO_INDEX)
            insert_symbol((yyvsp[-1].s), VAR, (yyvsp[-2].i), ++var_num, NO_ATR);
         else 
            err("redefinition of '%s'", (yyvsp[-1].s));
       }
-#line 1471 "micko.tab.c"
+#line 1473 "micko.tab.c"
     break;
 
   case 21:
-#line 153 "micko.y"
+#line 155 "micko.y"
       {
         int idx = lookup_symbol((yyvsp[-3].s), VAR|PAR);
         if(idx == NO_INDEX)
@@ -1481,100 +1483,123 @@ yyreduce:
             err("incompatible types in assignment");
         gen_mov((yyvsp[-1].i), idx);
       }
-#line 1485 "micko.tab.c"
+#line 1487 "micko.tab.c"
     break;
 
   case 23:
-#line 167 "micko.y"
+#line 169 "micko.y"
       {
         if(get_type((yyvsp[-2].i)) != get_type((yyvsp[0].i)))
           err("invalid operands: arithmetic operation");
         
         (yyval.i) = gen_arop((yyvsp[-2].i), (yyvsp[-1].i), (yyvsp[0].i));
       }
-#line 1496 "micko.tab.c"
+#line 1498 "micko.tab.c"
     break;
 
   case 24:
-#line 174 "micko.y"
+#line 176 "micko.y"
     {
 	if(get_type((yyvsp[-2].i)) != 1)
 	  err("invalid type: cannot be unsigned");
 	if(get_type((yyvsp[0].i)) != 1)
 	  err("invalid type: cannot be unsigned");
-
+	          
+	mod_num++;
+	(yyval.i) = gen_mod((yyvsp[-2].i), (yyvsp[0].i), mod_num);
     }
-#line 1508 "micko.tab.c"
+#line 1512 "micko.tab.c"
     break;
 
   case 26:
-#line 186 "micko.y"
+#line 190 "micko.y"
       {
         if(get_type((yyvsp[-2].i)) != get_type((yyvsp[0].i)))
           err("invalid operands: mathematics operation");
         
         (yyval.i) = gen_arop((yyvsp[-2].i), (yyvsp[-1].i), (yyvsp[0].i));
       }
-#line 1519 "micko.tab.c"
+#line 1523 "micko.tab.c"
     break;
 
   case 28:
-#line 198 "micko.y"
+#line 202 "micko.y"
       { 
+        abs_num++;
 	(yyval.i) = gen_abs((yyvsp[-1].i), abs_num);
       }
-#line 1527 "micko.tab.c"
+#line 1532 "micko.tab.c"
     break;
 
   case 29:
-#line 203 "micko.y"
+#line 208 "micko.y"
       {
         (yyval.i) = take_reg();
         gen_mov(FUN_REG, (yyval.i));
       }
-#line 1536 "micko.tab.c"
+#line 1541 "micko.tab.c"
     break;
 
   case 30:
-#line 209 "micko.y"
+#line 214 "micko.y"
       { (yyval.i) = (yyvsp[-1].i); }
-#line 1542 "micko.tab.c"
+#line 1547 "micko.tab.c"
     break;
 
   case 32:
-#line 216 "micko.y"
+#line 221 "micko.y"
       {
         (yyval.i) = lookup_symbol((yyvsp[0].s), VAR|PAR);
         if((yyval.i) == NO_INDEX)
           err("'%s' undeclared", (yyvsp[0].s));
       }
-#line 1552 "micko.tab.c"
+#line 1557 "micko.tab.c"
+    break;
+
+  case 33:
+#line 227 "micko.y"
+  {
+  	if(get_type((yyvsp[0].i)) != 1)
+	  err("invalid type: cannot be unsigned");
+  }
+#line 1566 "micko.tab.c"
+    break;
+
+  case 34:
+#line 232 "micko.y"
+  {
+  	if(get_type((yyvsp[-1].i)) != 1)
+	  err("invalid type: cannot be unsigned");
+	 fac_num++;
+	 (yyval.i) = gen_fac((yyvsp[-1].i), fac_num);
+  }
+#line 1577 "micko.tab.c"
     break;
 
   case 35:
-#line 227 "micko.y"
+#line 242 "micko.y"
       { (yyval.i) = insert_literal((yyvsp[0].s), INT); }
-#line 1558 "micko.tab.c"
+#line 1583 "micko.tab.c"
     break;
 
   case 36:
-#line 230 "micko.y"
+#line 245 "micko.y"
       { (yyval.i) = insert_literal((yyvsp[0].s), UINT); }
-#line 1564 "micko.tab.c"
+#line 1589 "micko.tab.c"
     break;
 
   case 37:
-#line 235 "micko.y"
+#line 250 "micko.y"
       {
         fcall_idx = lookup_symbol((yyvsp[0].s), FUN);
         if(fcall_idx == NO_INDEX)
           err("'%s' is not a function", (yyvsp[0].s));
       }
-#line 1574 "micko.tab.c"
+#line 1599 "micko.tab.c"
     break;
 
   case 38:
-#line 241 "micko.y"
+#line 256 "micko.y"
       {
         if(get_atr1(fcall_idx) != (yyvsp[-1].i))
           err("wrong number of arguments");
@@ -1584,17 +1609,17 @@ yyreduce:
         set_type(FUN_REG, get_type(fcall_idx));
         (yyval.i) = FUN_REG;
       }
-#line 1588 "micko.tab.c"
+#line 1613 "micko.tab.c"
     break;
 
   case 39:
-#line 254 "micko.y"
+#line 269 "micko.y"
     { (yyval.i) = 0; }
-#line 1594 "micko.tab.c"
+#line 1619 "micko.tab.c"
     break;
 
   case 40:
-#line 257 "micko.y"
+#line 272 "micko.y"
     { 
       if(get_atr2(fcall_idx) != get_type((yyvsp[0].i)))
         err("incompatible type for argument");
@@ -1603,73 +1628,73 @@ yyreduce:
       gen_sym_name((yyvsp[0].i));
       (yyval.i) = 1;
     }
-#line 1607 "micko.tab.c"
+#line 1632 "micko.tab.c"
     break;
 
   case 41:
-#line 269 "micko.y"
+#line 284 "micko.y"
       { code("\n@exit%d:", (yyvsp[0].i)); }
-#line 1613 "micko.tab.c"
+#line 1638 "micko.tab.c"
     break;
 
   case 42:
-#line 272 "micko.y"
+#line 287 "micko.y"
       { code("\n@exit%d:", (yyvsp[-2].i)); }
-#line 1619 "micko.tab.c"
+#line 1644 "micko.tab.c"
     break;
 
   case 43:
-#line 277 "micko.y"
+#line 292 "micko.y"
       {
         (yyval.i) = ++lab_num;
         code("\n@if%d:", lab_num);
       }
-#line 1628 "micko.tab.c"
+#line 1653 "micko.tab.c"
     break;
 
   case 44:
-#line 282 "micko.y"
+#line 297 "micko.y"
       {
         code("\n\t\t%s\t@false%d", opp_jumps[(yyvsp[0].i)], (yyvsp[-1].i));
         code("\n@true%d:", (yyvsp[-1].i));
       }
-#line 1637 "micko.tab.c"
+#line 1662 "micko.tab.c"
     break;
 
   case 45:
-#line 287 "micko.y"
+#line 302 "micko.y"
       {
         code("\n\t\tJMP \t@exit%d", (yyvsp[-4].i));
         code("\n@false%d:", (yyvsp[-4].i));
         (yyval.i) = (yyvsp[-4].i);
       }
-#line 1647 "micko.tab.c"
+#line 1672 "micko.tab.c"
     break;
 
   case 46:
-#line 296 "micko.y"
+#line 311 "micko.y"
       {
         if(get_type((yyvsp[-2].i)) != get_type((yyvsp[0].i)))
           err("invalid operands: relational operator");
         (yyval.i) = (yyvsp[-1].i) + ((get_type((yyvsp[-2].i)) - 1) * RELOP_NUMBER);
         gen_cmp((yyvsp[-2].i), (yyvsp[0].i));
       }
-#line 1658 "micko.tab.c"
+#line 1683 "micko.tab.c"
     break;
 
   case 47:
-#line 306 "micko.y"
+#line 321 "micko.y"
       {
         if(get_type(fun_idx) != get_type((yyvsp[-1].i)))
           err("incompatible types in return");
         gen_mov((yyvsp[-1].i), FUN_REG);
         code("\n\t\tJMP \t@%s_exit", get_name(fun_idx));        
       }
-#line 1669 "micko.tab.c"
+#line 1694 "micko.tab.c"
     break;
 
 
-#line 1673 "micko.tab.c"
+#line 1698 "micko.tab.c"
 
       default: break;
     }
@@ -1901,7 +1926,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 314 "micko.y"
+#line 329 "micko.y"
 
 
 int yyerror(char *s) {

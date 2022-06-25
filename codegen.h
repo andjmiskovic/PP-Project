@@ -28,4 +28,7 @@ int gen_abs(int exp_index, int abs_num);
 // generisanje modula
 int gen_mod(int number_index, int modul_index, int mod_num);
 
+// generisanje faktorijela
+int gen_fac(int number_index, int fac_num);
+
 #endif

@@ -21,6 +21,7 @@
   int lab_num = -1;
   int abs_num = 0;
   int mod_num = 0;
+  int fac_num = 0;
   FILE *output;
 %}
 
@@ -178,7 +179,8 @@ num_exp
 	if(get_type($3) != 1)
 	  err("invalid type: cannot be unsigned");
 	          
-	$$ = gen_mod($1, $3);
+	mod_num++;
+	$$ = gen_mod($1, $3, mod_num);
     }
   ;
 
@@ -198,6 +200,7 @@ exp
   
   | _ABS num_exp _ABS
       { 
+        abs_num++;
 	$$ = gen_abs($2, abs_num);
       }
 
@@ -229,6 +232,8 @@ exponent_exp
   {
   	if(get_type($1) != 1)
 	  err("invalid type: cannot be unsigned");
+	 fac_num++;
+	 $$ = gen_fac($1, fac_num);
   }
   ;
   

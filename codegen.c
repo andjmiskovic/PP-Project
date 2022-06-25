@@ -92,9 +92,7 @@ int gen_arop(int op1_index, int operation, int op2_index) {
         return taken_reg;
 }
 
-int gen_mod(int number_index, int modul_index, int mod_num) {
-	mod_num++;
-	
+int gen_mod(int number_index, int modul_index, int mod_num) {	
         code("\n@for_init%d:\n\t", mod_num);
         // i = 0
         int i = take_reg();
@@ -105,7 +103,8 @@ int gen_mod(int number_index, int modul_index, int mod_num) {
         code(", ");
         gen_sym_name(i);
         
-        code("\n@for_test:\n\t", mod_num);
+        // if 
+        code("\n@for_test%d:\n\t", mod_num);
         
         code("\n@for_body%d:\n\t", mod_num);
                 
@@ -114,8 +113,49 @@ int gen_mod(int number_index, int modul_index, int mod_num) {
         code("\n@for_end%d:\n\t", mod_num);
 }
 
+int gen_fac(int number_index, int fac_num) {
+	// res = 1
+	int res = take_reg();
+	code("\n\t\tMOV \t$1,");
+	gen_sym_name(res);
+	
+        code("\n@for_init%d:", fac_num);
+        // i = number - 1
+        int i = take_reg();
+        gen_mov(number_index, i);
+        
+        // if i > 0: end
+        code("\n@for_test%d:\n\t", fac_num);
+        code("\tADDS \t");
+        gen_sym_name(i);
+        code(",$0,");
+        gen_sym_name(i);
+        code("\n\t\tJLES \t@for_end%d", fac_num);
+        
+        // else: res *= i
+        code("\n@for_body%d:", fac_num);
+        code("\n\t\tMULS\t");
+        gen_sym_name(res);
+        code(",");
+        gen_sym_name(i);
+        code(",");
+        gen_sym_name(res);
+                
+        // i--        
+        code("\n@for_dec%d:\n\t", fac_num);
+        code("\tSUBS \t");
+        gen_sym_name(i);
+        code(",$1,");
+        gen_sym_name(i);
+        code("\n\t\tJMP \t@for_test%d", fac_num);
+        
+        code("\n@for_end%d:", fac_num);
+
+	// kako da vratim resenje?
+        return number_index;
+}
+
 int gen_abs(int exp_index, int abs_num) {
-	abs_num++;
 	code("\n\t\tCMPS \t");
 	gen_sym_name(exp_index);
 	code(", $0");
