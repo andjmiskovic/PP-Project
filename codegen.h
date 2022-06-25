@@ -19,4 +19,10 @@ void gen_cmp(int operand1_index, int operand2_index);
 // generise MOV naredbu, parametri su indeksi operanada u TS-a 
 void gen_mov(int input_index, int output_index);
 
+// generisanje aritmetickih i matematickih operacija
+int gen_arop(int op1_index, int operation, int op2_index);
+
+// generisanje apsolutne vrednosti
+int gen_abs(int exp_index, int abs_num);
+
 #endif

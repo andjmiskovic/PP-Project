@@ -1,4 +1,5 @@
 //OPIS: apsolutna vrednost u deklaraciji
 int main() {
-    int a = |2|;
+    int a;
+    a = |2|;
 }

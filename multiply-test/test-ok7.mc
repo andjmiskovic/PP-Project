@@ -1,4 +1,4 @@
-//OPIS: sabiranje + mnozenje
+//RETURN: 71
 
 int main() {
     int a;
@@ -8,6 +8,6 @@ int main() {
     a = 5;
     b = 3;
     
-    c = a + b * 7;
+    c = (a + b) * 7 + 15;
     return c;
 }

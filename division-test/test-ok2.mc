@@ -1,16 +1,14 @@
-//OPIS: mnozenje 3 broja
+//OPIS: deljenje 3 broja
 
 int main() {
     int a;
     int b;
-    int c;
     int d;
     
     a = 5;
     b = 4;
-    c = 8;
     
-    a = a * 17;
-    d = a * b * c;
+    a = 15 / a;
+    d = 300 / a / b;
     return d;
 }

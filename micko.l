@@ -25,11 +25,11 @@
 
 "+"                  { yylval.i = ADD; return _AROP; }
 "-"                  { yylval.i = SUB; return _AROP; }
-"*"                  { yylval.i = MUL; return _AROP; }
-"/"                  { yylval.i = DIV; return _AROP; }
-"%"                  { yylval.i = MOD; return _AROP; }
-"^"                  { yylval.i = EXP; return _AROP; }
+"*"                  { yylval.i = MUL; return _MATOP; }
+"/"                  { yylval.i = DIV; return _MATOP; }
 
+"%"                  { return _MOD; }
+"^"                  { return _EXP; }
 "|"                  { return _ABS; }
 
 "<"                  { yylval.i = LT; return _RELOP; }

@@ -19,6 +19,7 @@
   int fun_idx = -1;
   int fcall_idx = -1;
   int lab_num = -1;
+  int abs_num = 0;
   FILE *output;
 %}
 
@@ -40,11 +41,14 @@
 %token _RBRACKET
 %token _ASSIGN
 %token _SEMICOLON
+%token _ABS
+%token _MOD
+%token _EXP
 %token <i> _AROP
 %token <i> _MATOP
 %token <i> _RELOP
-
-%type <i> num_exp exp literal
+S
+%type <i> num_exp exp math_exp abs_exp literal
 %type <i> function_call argument rel_exp if_part
 
 %nonassoc ONLY_IF
@@ -163,17 +167,7 @@ num_exp
         if(get_type($1) != get_type($3))
           err("invalid operands: arithmetic operation");
         
-        int type = get_type($1);    
-        code("\n\t\t%s\t", ar_instructions[$2 + (type - 1) * AROP_NUMBER]);
-        gen_sym_name($1);
-        code(",");
-        gen_sym_name($3);
-        code(",");
-        free_if_reg($3);
-        free_if_reg($1);
-        $$ = take_reg();
-        gen_sym_name($$);
-        set_type($$, type);
+        $$ = gen_arop($1, $2, $3);
       }
   ;
 
@@ -184,22 +178,21 @@ math_exp
         if(get_type($1) != get_type($3))
           err("invalid operands: mathematics operation");
         
-        int type = get_type($1);    
-        code("\n\t\t%s\t", ar_instructions[$2 + (type - 1) * AROP_NUMBER]);
-        gen_sym_name($1);
-        code(",");
-        gen_sym_name($3);
-        code(",");
-        free_if_reg($3);
-        free_if_reg($1);
-        $$ = take_reg();
-        gen_sym_name($$);
-        set_type($$, type);
+        $$ = gen_arop($1, $2, $3);
+      }
+  ;
+  
+abs_exp
+  : _ABS num_exp _ABS
+      { 
+	$$ = gen_abs($2, abs_num);
       }
   ;
 
 exp
   : literal
+  
+  | abs_exp
 
   | _ID
       {
@@ -216,6 +209,7 @@ exp
   
   | _LPAREN num_exp _RPAREN
       { $$ = $2; }
+      
   ;
 
 literal
