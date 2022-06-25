@@ -20,6 +20,7 @@
   int fcall_idx = -1;
   int lab_num = -1;
   int abs_num = 0;
+  int mod_num = 0;
   FILE *output;
 %}
 
@@ -220,7 +221,15 @@ exponent_exp
           err("'%s' undeclared", $1);
       } 
   | exponent_exp _EXP literal
+  {
+  	if(get_type($3) != 1)
+	  err("invalid type: cannot be unsigned");
+  }
   | exponent_exp _FAC
+  {
+  	if(get_type($1) != 1)
+	  err("invalid type: cannot be unsigned");
+  }
   ;
   
 literal

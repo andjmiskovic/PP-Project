@@ -92,20 +92,26 @@ int gen_arop(int op1_index, int operation, int op2_index) {
         return taken_reg;
 }
 
-int gen_mod(int number_index, int modul_index) {
-        int type = get_type(op1_index);    
-        code("\n\t\t%s\t", ar_instructions[operation + (type - 1) * AROP_NUMBER]);
-        gen_sym_name(op1_index);
-        code(",");
-        gen_sym_name(op2_index);
-        code(",");
-        free_if_reg(op2_index);
-        free_if_reg(op1_index);
+int gen_mod(int number_index, int modul_index, int mod_num) {
+	mod_num++;
+	
+        code("\n@for_init%d:\n\t", mod_num);
+        // i = 0
+        int i = take_reg();
+        code("SUBS \t");
+        gen_sym_name(i);
+        code(", ");
+        gen_sym_name(i);
+        code(", ");
+        gen_sym_name(i);
         
-        int taken_reg = take_reg();
-        gen_sym_name(taken_reg);
-        set_type(taken_reg, type);
-        return taken_reg;
+        code("\n@for_test:\n\t", mod_num);
+        
+        code("\n@for_body%d:\n\t", mod_num);
+                
+        code("\n@for_inc%d:\n\t", mod_num);
+        
+        code("\n@for_end%d:\n\t", mod_num);
 }
 
 int gen_abs(int exp_index, int abs_num) {
