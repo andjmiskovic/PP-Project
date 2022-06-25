@@ -1,5 +1,5 @@
-//OPIS: zarez u apsolutnoj vrednosti
+//OPIS: eksponent bez vrednosti
 int main() {
     int a;
-    a = |2,|;
+    a = 23^;
 }

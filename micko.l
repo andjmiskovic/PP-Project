@@ -31,6 +31,7 @@
 "%"                  { return _MOD; }
 "^"                  { return _EXP; }
 "|"                  { return _ABS; }
+"!"                  { return _FAC; }
 
 "<"                  { yylval.i = LT; return _RELOP; }
 ">"                  { yylval.i = GT; return _RELOP; }

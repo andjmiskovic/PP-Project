@@ -1,5 +1,6 @@
-//OPIS: apsolutna u apsolutnoj vrednosti
+//OPIS: obican kvadrat sa promenljivom
 int main() {
-    int a = -5;
-    int b = |a + |-18||;
+    int a;
+    a = 3;
+    return a^2;
 }

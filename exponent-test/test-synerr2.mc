@@ -1,5 +1,5 @@
-//OPIS: prazne zagrade
+//OPIS: dupli eksponent
 int main() {
     int a;
-    a = ||;
+    a = 2^^3;
 }

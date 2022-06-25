@@ -1,5 +1,5 @@
-//OPIS: promenljiva u apsolutnoj vrednosti
+//RETURN: 25
 int main() {
-    int a = -5;
-    int b = |a|;
+    int a = 5;
+    return a^5;
 }

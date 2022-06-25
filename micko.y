@@ -44,11 +44,12 @@
 %token _ABS
 %token _MOD
 %token _EXP
+%token _FAC
 %token <i> _AROP
 %token <i> _MATOP
 %token <i> _RELOP
 S
-%type <i> num_exp exp math_exp abs_exp literal
+%type <i> num_exp exp math_exp literal exponent_exp
 %type <i> function_call argument rel_exp if_part
 
 %nonassoc ONLY_IF
@@ -169,6 +170,15 @@ num_exp
         
         $$ = gen_arop($1, $2, $3);
       }
+  | num_exp _MOD math_exp
+    {
+	if(get_type($1) != 1)
+	  err("invalid type: cannot be unsigned");
+	if(get_type($3) != 1)
+	  err("invalid type: cannot be unsigned");
+	          
+	$$ = gen_mod($1, $3);
+    }
   ;
 
 math_exp 
@@ -180,25 +190,14 @@ math_exp
         
         $$ = gen_arop($1, $2, $3);
       }
-  ;
-  
-abs_exp
-  : _ABS num_exp _ABS
-      { 
-	$$ = gen_abs($2, abs_num);
-      }
-  ;
+  ; 
 
 exp
-  : literal
+  : exponent_exp
   
-  | abs_exp
-
-  | _ID
-      {
-        $$ = lookup_symbol($1, VAR|PAR);
-        if($$ == NO_INDEX)
-          err("'%s' undeclared", $1);
+  | _ABS num_exp _ABS
+      { 
+	$$ = gen_abs($2, abs_num);
       }
 
   | function_call
@@ -211,7 +210,19 @@ exp
       { $$ = $2; }
       
   ;
-
+  
+exponent_exp
+  : literal
+  | _ID
+      {
+        $$ = lookup_symbol($1, VAR|PAR);
+        if($$ == NO_INDEX)
+          err("'%s' undeclared", $1);
+      } 
+  | exponent_exp _EXP literal
+  | exponent_exp _FAC
+  ;
+  
 literal
   : _INT_NUMBER
       { $$ = insert_literal($1, INT); }

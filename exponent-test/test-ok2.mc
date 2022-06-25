@@ -1,6 +1,4 @@
-//OPIS: apsolutna vrednost u izrazu
+//OPIS: sabiranje eksponenata
 int main() {
-    int a;
-    a = |2|;
-    a = a + |-5|;
+    return 2^3 + 1^4;
 }

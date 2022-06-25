@@ -25,4 +25,7 @@ int gen_arop(int op1_index, int operation, int op2_index);
 // generisanje apsolutne vrednosti
 int gen_abs(int exp_index, int abs_num);
 
+// generisanje modula
+int gen_mod(int number_index, int modul_index);
+
 #endif

@@ -373,8 +373,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 31
-#define YY_END_OF_BUFFER 32
+#define YY_NUM_RULES 32
+#define YY_END_OF_BUFFER 33
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -384,14 +384,14 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[76] =
     {   0,
-        0,    0,   32,   30,    1,    1,   30,   17,    7,    8,
-       15,   13,   14,   16,   27,   11,   20,   12,   21,   26,
-       18,   26,   26,   26,   26,    9,   19,   10,    1,   25,
-       27,   29,   27,   28,   22,   24,   23,   26,   26,    4,
-       26,   26,   26,   27,   29,   27,   26,    2,   26,   26,
-       27,   27,    5,   26,   26,   27,   27,   26,   26,   27,
-       27,    6,   26,   27,   27,   26,   27,   27,    3,   27,
-       27,   27,   27,   27,    0
+        0,    0,   33,   31,    1,    1,   20,   17,    7,    8,
+       15,   13,   14,   16,   28,   11,   21,   12,   22,   27,
+       18,   27,   27,   27,   27,    9,   19,   10,    1,   26,
+       28,   30,   28,   29,   23,   25,   24,   27,   27,    4,
+       27,   27,   27,   28,   30,   28,   27,    2,   27,   27,
+       28,   28,    5,   27,   27,   28,   28,   27,   27,   28,
+       28,    6,   27,   28,   28,   27,   28,   28,    3,   28,
+       28,   28,   28,   28,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -497,10 +497,10 @@ static const flex_int16_t yy_chk[141] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[32] =
+static const flex_int32_t yy_rule_can_match_eol[33] =
     {   0,
 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -908,69 +908,74 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 35 "micko.l"
-{ yylval.i = LT; return _RELOP; }
+#line 34 "micko.l"
+{ return _FAC; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 36 "micko.l"
-{ yylval.i = GT; return _RELOP; }
+{ yylval.i = LT; return _RELOP; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 37 "micko.l"
-{ yylval.i = LE; return _RELOP; }
+{ yylval.i = GT; return _RELOP; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 38 "micko.l"
-{ yylval.i = GE; return _RELOP; }
+{ yylval.i = LE; return _RELOP; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 39 "micko.l"
-{ yylval.i = EQ; return _RELOP; }
+{ yylval.i = GE; return _RELOP; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 40 "micko.l"
-{ yylval.i = NE; return _RELOP; }
+{ yylval.i = EQ; return _RELOP; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "micko.l"
-{ yylval.s = strdup(yytext); 
-                       return _ID; }
+#line 41 "micko.l"
+{ yylval.i = NE; return _RELOP; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 44 "micko.l"
+#line 43 "micko.l"
 { yylval.s = strdup(yytext); 
-                       return _INT_NUMBER;}
+                       return _ID; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 46 "micko.l"
+#line 45 "micko.l"
+{ yylval.s = strdup(yytext); 
+                       return _INT_NUMBER;}
+	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 47 "micko.l"
 { yylval.s = strdup(yytext); 
                        yylval.s[yyleng-1] = 0;
                        return _UINT_NUMBER;}
 	YY_BREAK
-case 29:
-YY_RULE_SETUP
-#line 50 "micko.l"
-{ /* skip */ }
-	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 51 "micko.l"
-{ printf("line %d: LEXICAL ERROR on char %c\n", yylineno, *yytext);}
+{ /* skip */ }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 52 "micko.l"
+{ printf("line %d: LEXICAL ERROR on char %c\n", yylineno, *yytext);}
+	YY_BREAK
+case 32:
+YY_RULE_SETUP
+#line 53 "micko.l"
 ECHO;
 	YY_BREAK
-#line 974 "lex.yy.c"
+#line 979 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1987,6 +1992,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 52 "micko.l"
+#line 53 "micko.l"
 
 

@@ -1,5 +1,7 @@
 //RETURN: 2
 
 int main() {
-    return |-165|;
+	int a;
+	a = 16;
+    return |a|;
 }

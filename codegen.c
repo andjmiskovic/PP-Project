@@ -92,6 +92,22 @@ int gen_arop(int op1_index, int operation, int op2_index) {
         return taken_reg;
 }
 
+int gen_mod(int number_index, int modul_index) {
+        int type = get_type(op1_index);    
+        code("\n\t\t%s\t", ar_instructions[operation + (type - 1) * AROP_NUMBER]);
+        gen_sym_name(op1_index);
+        code(",");
+        gen_sym_name(op2_index);
+        code(",");
+        free_if_reg(op2_index);
+        free_if_reg(op1_index);
+        
+        int taken_reg = take_reg();
+        gen_sym_name(taken_reg);
+        set_type(taken_reg, type);
+        return taken_reg;
+}
+
 int gen_abs(int exp_index, int abs_num) {
 	abs_num++;
 	code("\n\t\tCMPS \t");

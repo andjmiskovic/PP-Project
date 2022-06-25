@@ -1,6 +1,4 @@
-//OPIS: izraz u apsolutnoj vrednosti
+//RETURN: 32
 int main() {
-    int a;
-    a = |2|;
-    a = a + |-5+9-2|;
+    return 2^5;
 }

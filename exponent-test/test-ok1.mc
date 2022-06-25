@@ -1,4 +1,5 @@
 //OPIS: obican kvadrat
 int main() {
-    int a = 2^2;
+    int a;
+    a = 2^2;
 }
