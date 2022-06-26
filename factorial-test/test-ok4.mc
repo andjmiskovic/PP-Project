@@ -1,4 +1,4 @@
 //RETURN: 120
-int main() {
-    return 5!;
+unsigned main() {
+    return 5u!;
 }

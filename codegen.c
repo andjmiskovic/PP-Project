@@ -113,11 +113,12 @@ int gen_mod(int number_index, int modul_index, int mod_num) {
         code("\n@for_end%d:\n\t", mod_num);
 }
 
-int gen_fac(int number_index, int fac_num) {
+unsigned gen_fac(int number_index, int fac_num) {
 	// res = 1
 	int res = take_reg();
 	code("\n\t\tMOV \t$1,");
 	gen_sym_name(res);
+	set_type(res, UINT);
 	
         code("\n@for_init%d:", fac_num);
         // i = number - 1
@@ -126,15 +127,14 @@ int gen_fac(int number_index, int fac_num) {
         
         // if i > 0: end
         code("\n@for_test%d:\n\t", fac_num);
-        code("\tADDS \t");
+        code("\tCMPU \t");
         gen_sym_name(i);
-        code(",$0,");
-        gen_sym_name(i);
-        code("\n\t\tJLES \t@for_end%d", fac_num);
+        code(",$0");
+        code("\n\t\tJLEU \t@for_end%d", fac_num);
         
         // else: res *= i
         code("\n@for_body%d:", fac_num);
-        code("\n\t\tMULS\t");
+        code("\n\t\tMULU\t");
         gen_sym_name(res);
         code(",");
         gen_sym_name(i);
@@ -143,7 +143,7 @@ int gen_fac(int number_index, int fac_num) {
                 
         // i--        
         code("\n@for_dec%d:\n\t", fac_num);
-        code("\tSUBS \t");
+        code("\tSUBU \t");
         gen_sym_name(i);
         code(",$1,");
         gen_sym_name(i);
@@ -152,20 +152,27 @@ int gen_fac(int number_index, int fac_num) {
         code("\n@for_end%d:", fac_num);
 
 	// kako da vratim resenje?
-        return number_index;
+	/*int out = take_reg();
+	gen_mov(res, out);
+        return out;*/
+        return res;
 }
 
 int gen_abs(int exp_index, int abs_num) {
+	int exp = take_reg();
+	set_type(exp, INT);
+	gen_mov(exp_index, exp);
+	
 	code("\n\t\tCMPS \t");
-	gen_sym_name(exp_index);
+	gen_sym_name(exp);
 	code(", $0");
-	code("\n\t\tJGTS \t@negative%d", abs_num);
+	code("\n\t\tJLTS \t@negative%d", abs_num);
 	code("\n\t\tJMP \t@positive%d", abs_num);
 	code("\n@negative%d:", abs_num);
 	code("\n\t\tDIVS \t");
-	gen_sym_name(exp_index);
+	gen_sym_name(exp);
         code(", $-1, ");
-        gen_sym_name(exp_index);
+        gen_sym_name(exp);
 	code("\n@positive%d:", abs_num);
-	return exp_index;
+	return exp;
 }

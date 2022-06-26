@@ -1,7 +1,6 @@
 //RETURN: 4
 int main() {
     int a;
-    a = |-2|;
-    a = a + |-5+9-2|;
+    a = 1+2+3;
     return a;
 }

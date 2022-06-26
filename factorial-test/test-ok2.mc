@@ -1,6 +1,6 @@
 //OPIS: dupli faktorijel
 int main() {
-    int a;
-    a = 2!!;
-    a = a + 2!;
+    unsigned a;
+    a = 2u!!;
+    a = a + 2u!;
 }

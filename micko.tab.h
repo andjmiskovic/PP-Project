@@ -66,11 +66,10 @@ extern int yydebug;
     _MOD = 272,
     _EXP = 273,
     _FAC = 274,
-    _AROP = 275,
-    _MATOP = 276,
+    _MATOP = 275,
+    _AROP = 276,
     _RELOP = 277,
-    S = 278,
-    ONLY_IF = 279
+    ONLY_IF = 278
   };
 #endif
 
@@ -83,7 +82,7 @@ union YYSTYPE
   int i;
   char *s;
 
-#line 87 "micko.tab.h"
+#line 86 "micko.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

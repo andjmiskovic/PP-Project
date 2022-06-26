@@ -1,4 +1,4 @@
 //RETURN: 720
-int main() {
-    return 3!!;
+unsigned main() {
+    return 3u!!;
 }

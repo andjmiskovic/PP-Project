@@ -47,11 +47,11 @@
 %token _MOD
 %token _EXP
 %token _FAC
-%token <i> _AROP
 %token <i> _MATOP
+%token <i> _AROP
 %token <i> _RELOP
-S
-%type <i> num_exp exp math_exp literal exponent_exp
+
+%type <i> num_exp exp literal exponent_exp math_exp
 %type <i> function_call argument rel_exp if_part
 
 %nonassoc ONLY_IF
@@ -183,8 +183,8 @@ num_exp
 	$$ = gen_mod($1, $3, mod_num);
     }
   ;
-
-math_exp 
+  
+math_exp
   : exp
   | math_exp _MATOP exp
       {
@@ -193,7 +193,7 @@ math_exp
         
         $$ = gen_arop($1, $2, $3);
       }
-  ; 
+  ;
 
 exp
   : exponent_exp
@@ -230,8 +230,8 @@ exponent_exp
   }
   | exponent_exp _FAC
   {
-  	if(get_type($1) != 1)
-	  err("invalid type: cannot be unsigned");
+  	if(get_type($1) != 2)
+	  err("invalid type: cannot be signed");
 	 fac_num++;
 	 $$ = gen_fac($1, fac_num);
   }
