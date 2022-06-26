@@ -1,3 +1,4 @@
+//RETURN: 2720
 //OPIS: mnozenje 3 broja
 
 int main() {

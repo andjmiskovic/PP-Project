@@ -1,11 +1,12 @@
-//OPIS: losi tipovi
+//OPIS: nedeklarisana promenjiva
 
 int main() {
     int a;
-    unsigned b;
+    int b;
     
-    a = 15;
+    a = 5;
     b = 3;
+    c = 11;
     
-    return a / b;
+    return a + (b * 7 + 1) / c;
 }

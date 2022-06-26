@@ -1,13 +1,11 @@
-//RETURN: 26
+//RETURN: 45
 
 int main() {
     int a;
-    int b;
-    int c;
+    unsigned b;
     
-    a = 5;
+    a = 15;
     b = 3;
     
-    c = a + b * 7;
-    return c;
+    return a * b;
 }

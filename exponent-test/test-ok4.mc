@@ -1,6 +1,10 @@
-//RETURN: 125
+//RETURN: 19683
+// OPIS: eksponent funkcije
+
+int f(int x) {
+    return x^2 + 2;
+}
+
 unsigned main() {
-    unsigned a;
-    a = 5u;
-    return a^3u;
+    return f(5)^3;
 }

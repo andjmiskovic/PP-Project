@@ -1,3 +1,4 @@
+//RETURN:1
 //OPIS: modul promenljive
 unsigned main() {
     unsigned a;

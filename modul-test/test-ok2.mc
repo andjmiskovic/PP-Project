@@ -1,3 +1,4 @@
+//RETURN:2
 //OPIS: modul sa zagradama
 unsigned main() {
     unsigned a;

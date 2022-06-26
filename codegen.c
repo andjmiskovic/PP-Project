@@ -120,7 +120,7 @@ unsigned gen_mod(unsigned number_index, unsigned modul_index, int mod_num) {
         code("\n\t\tCMPS \t");
         gen_sym_name(i);
         code(",$0");
-        code("\n\t\tJLES \t@while_end%d", mod_num);
+        code("\n\t\tJLTS \t@while_end%d", mod_num);
         
         // res -= modul
         code("\n@while_body%d:\n\t", mod_num);

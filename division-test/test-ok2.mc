@@ -1,3 +1,4 @@
+//RETURN: 25
 //OPIS: deljenje 3 broja
 
 int main() {

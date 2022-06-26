@@ -1,4 +1,4 @@
 //RETURN: 7
 unsigned main() {
-    return 27u%20u;
+    return 3^3 % 20u;
 }

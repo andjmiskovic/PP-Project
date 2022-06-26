@@ -52,7 +52,7 @@
 %token <i> _AROP
 %token <i> _RELOP
 
-%type <i> num_exp exp literal exponent_exp math_exp
+%type <i> num_exp exp literal math_exp
 %type <i> function_call argument rel_exp if_part
 
 %nonassoc ONLY_IF
@@ -194,7 +194,23 @@ math_exp
   ;
 
 exp
-  : exponent_exp
+  : literal
+  | _ID
+      {
+        $$ = lookup_symbol($1, VAR|PAR);
+        if($$ == NO_INDEX)
+          err("'%s' undeclared", $1);
+      } 
+  | exp _EXP literal
+      {
+	exponent_num++;
+	$$ = gen_exp($1, $3, exponent_num);
+      }
+  | exp _FAC
+      {
+	fac_num++;
+	$$ = gen_fac($1, fac_num);
+      }
   
   | _ABS num_exp _ABS
       { 
@@ -211,26 +227,6 @@ exp
   | _LPAREN num_exp _RPAREN
       { $$ = $2; }
       
-  ;
-  
-exponent_exp
-  : literal
-  | _ID
-      {
-        $$ = lookup_symbol($1, VAR|PAR);
-        if($$ == NO_INDEX)
-          err("'%s' undeclared", $1);
-      } 
-  | exponent_exp _EXP literal
-  {
-	exponent_num++;
-	$$ = gen_exp($1, $3, exponent_num);
-  }
-  | exponent_exp _FAC
-  {
-	fac_num++;
-	$$ = gen_fac($1, fac_num);
-  }
   ;
   
 literal

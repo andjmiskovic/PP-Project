@@ -1,14 +1,13 @@
-//RETURN: 25
+//RETURN: 26
 
 int main() {
     int a;
     int b;
-    int d;
+    int c;
     
     a = 5;
-    b = 4;
+    b = 3;
     
-    a = 15 / a;
-    d = 300 / a / b;
-    return d;
+    c = a + b * 7 / 1;
+    return c;
 }

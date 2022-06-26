@@ -1,3 +1,4 @@
+//RETURN: 9
 //OPIS: obican kvadrat sa promenljivom
 unsigned main() {
     unsigned a;

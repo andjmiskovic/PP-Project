@@ -1,3 +1,4 @@
+//RETURN:71
 //OPIS: sabiranje + mnozenje + zagrade
 
 int main() {

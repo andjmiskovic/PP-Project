@@ -1,5 +1,6 @@
-//OPIS GRESKE: promenljiva nije INT
+//OPIS GRESKE: faktorijel negativnog broja
 int main() {
-    unsigned a;
+    int a;
+    a = -5;
     return a!;
 }

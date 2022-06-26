@@ -1,9 +1,8 @@
-//OPIS: losi tipovi test broj 2
+//OPIS: nedeklarisana promenljiva
 
 int main() {
     int a;
     int b;
-    unsigned c;
     
     a = 5;
     b = 3;

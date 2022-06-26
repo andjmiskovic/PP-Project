@@ -1,3 +1,4 @@
+//RETURN: 26
 //OPIS: sabiranje + mnozenje
 
 int main() {

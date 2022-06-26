@@ -1,4 +1,4 @@
-//RETURN: 120
+//RETURN: 12
 unsigned main() {
-    return 5u!;
+    return 5u! / 10;
 }

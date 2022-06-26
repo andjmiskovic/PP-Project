@@ -1,3 +1,4 @@
+//RETURN: 59
 //OPIS: sve operacije + zagrade
 
 int main() {

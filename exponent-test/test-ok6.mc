@@ -1,3 +1,4 @@
+//RETURN: 6561
 //OPIS: dupli eksponent sa vrednostima
 unsigned main() {
     unsigned a;
