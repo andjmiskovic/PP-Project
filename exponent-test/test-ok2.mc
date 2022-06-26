@@ -1,4 +1,4 @@
 //OPIS: sabiranje eksponenata
-int main() {
-    return 2^3 + 1^4;
+unsigned main() {
+    return 2u^3u + 1u^4u;
 }

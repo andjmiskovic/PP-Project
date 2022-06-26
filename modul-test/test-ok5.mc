@@ -1,4 +1,4 @@
 //RETURN: 7
-int main() {
-    return 27%20;
+unsigned main() {
+    return 27u%20u;
 }

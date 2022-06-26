@@ -1,4 +1,4 @@
 //RETURN: 5
-int main() {
-    return 11%6;
+unsigned main() {
+    return 11u%6u;
 }

@@ -1,5 +1,5 @@
 //OPIS: obican modul
-int main() {
-    int a;
-    a = 10%3;
+unsigned main() {
+    unsigned a;
+    a = 10u%3u;
 }

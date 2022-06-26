@@ -1,6 +1,6 @@
 //OPIS: modul promenljive
-int main() {
-    int a;
-    a = 5;
-    return a%2;
+unsigned main() {
+    unsigned a;
+    a = 5u;
+    return a%2u;
 }

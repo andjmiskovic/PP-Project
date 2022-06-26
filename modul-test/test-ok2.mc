@@ -1,6 +1,6 @@
 //OPIS: modul sa zagradama
-int main() {
-    int a;
-    a = (11 + 6)%5;
+unsigned main() {
+    unsigned a;
+    a = (11u + 6u)%5u;
     return a;
 }

@@ -1,5 +1,6 @@
-//RETURN: 25
-int main() {
-    int a = 5;
-    return a^5;
+//RETURN: 125
+unsigned main() {
+    unsigned a;
+    a = 5u;
+    return a^3u;
 }

@@ -22,6 +22,7 @@
   int abs_num = 0;
   int mod_num = 0;
   int fac_num = 0;
+  int exponent_num = 0;
   FILE *output;
 %}
 
@@ -155,10 +156,13 @@ assignment_statement
       {
         int idx = lookup_symbol($1, VAR|PAR);
         if(idx == NO_INDEX)
-          err("invalid lvalue '%s' in assignment", $1);
+          err("invalid value '%s' in assignment", $1);
         else
-          if(get_type(idx) != get_type($3))
+          if(get_type(idx) != get_type($3)) {
             err("incompatible types in assignment");
+            err("%d",get_type(idx));
+            err("%d", get_type($3));
+          }
         gen_mov($3, idx);
       }
   ;
@@ -174,10 +178,10 @@ num_exp
       }
   | num_exp _MOD math_exp
     {
-	if(get_type($1) != 1)
-	  err("invalid type: cannot be unsigned");
-	if(get_type($3) != 1)
-	  err("invalid type: cannot be unsigned");
+	if(get_type($1) != 2)
+	  err("invalid type: cannot be signed");
+	if(get_type($3) != 2)
+	  err("invalid type: cannot be signed");
 	          
 	mod_num++;
 	$$ = gen_mod($1, $3, mod_num);
@@ -225,15 +229,17 @@ exponent_exp
       } 
   | exponent_exp _EXP literal
   {
-  	if(get_type($3) != 1)
-	  err("invalid type: cannot be unsigned");
+  	if(get_type($3) != 2)
+	  err("invalid type: cannot be signed");
+	exponent_num++;
+	$$ = gen_exp($1, $3, exponent_num);
   }
   | exponent_exp _FAC
   {
   	if(get_type($1) != 2)
 	  err("invalid type: cannot be signed");
-	 fac_num++;
-	 $$ = gen_fac($1, fac_num);
+	fac_num++;
+	$$ = gen_fac($1, fac_num);
   }
   ;
   

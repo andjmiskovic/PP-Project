@@ -1,7 +1,7 @@
 //OPIS: promenljiva u apsolutnoj vrednosti
 int main() {
     int a;
-    a = -5;
     int b;
+    a = -5;
     b = |a|;
 }

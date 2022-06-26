@@ -1,4 +1,4 @@
 //RETURN: 32
-int main() {
-    return 2^5;
+unsigned main() {
+    return 2u^5u;
 }

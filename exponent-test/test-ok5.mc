@@ -1,6 +1,6 @@
 //OPIS: obican kvadrat sa promenljivom
-int main() {
-    int a;
-    a = 3;
-    return a^2;
+unsigned main() {
+    unsigned a;
+    a = 3u;
+    return a^2u;
 }

@@ -92,28 +92,53 @@ int gen_arop(int op1_index, int operation, int op2_index) {
         return taken_reg;
 }
 
-int gen_mod(int number_index, int modul_index, int mod_num) {	
-        code("\n@for_init%d:\n\t", mod_num);
-        // i = 0
+unsigned gen_mod(unsigned number_index, unsigned modul_index, int mod_num) {	
+	// res = number
+	int res = take_reg();
+	code("\n\t\tMOV \t");
+	gen_sym_name(number_index);
+	code(",");
+	gen_sym_name(res);
+	set_type(res, UINT);	
+	
+	// i = number
         int i = take_reg();
-        code("SUBS \t");
-        gen_sym_name(i);
-        code(", ");
-        gen_sym_name(i);
-        code(", ");
-        gen_sym_name(i);
+        gen_mov(number_index, i);
+        set_type(i, INT);
+	
+        code("\n@while_test%d:\n\t", mod_num);
         
-        // if 
-        code("\n@for_test%d:\n\t", mod_num);
+        // i -= modul        
+        code("\tSUBS \t");
+        gen_sym_name(i);
+        code(",");
+        gen_sym_name(modul_index);
+        code(",");
+        gen_sym_name(i);
+        printf("i=%d", i);
         
-        code("\n@for_body%d:\n\t", mod_num);
-                
-        code("\n@for_inc%d:\n\t", mod_num);
+        // if i <= 0
+        code("\n\t\tCMPS \t");
+        gen_sym_name(i);
+        code(",$0");
+        code("\n\t\tJLES \t@while_end%d", mod_num);
         
-        code("\n@for_end%d:\n\t", mod_num);
+        // res -= modul
+        code("\n@while_body%d:\n\t", mod_num);
+        code("\tSUBU \t");
+        gen_sym_name(res);
+        code(",");
+        gen_sym_name(modul_index);
+        code(",");
+        gen_sym_name(res);
+        
+        code("\n\t\tJMP \t@while_test%d", mod_num);
+        
+        code("\n@while_end%d:\n\t", mod_num);
+        return res;
 }
 
-unsigned gen_fac(int number_index, int fac_num) {
+unsigned gen_fac(unsigned number_index, int fac_num) {
 	// res = 1
 	int res = take_reg();
 	code("\n\t\tMOV \t$1,");
@@ -121,7 +146,7 @@ unsigned gen_fac(int number_index, int fac_num) {
 	set_type(res, UINT);
 	
         code("\n@for_init%d:", fac_num);
-        // i = number - 1
+        // i = number
         int i = take_reg();
         gen_mov(number_index, i);
         
@@ -151,16 +176,53 @@ unsigned gen_fac(int number_index, int fac_num) {
         
         code("\n@for_end%d:", fac_num);
 
-	// kako da vratim resenje?
-	/*int out = take_reg();
-	gen_mov(res, out);
-        return out;*/
+        return res;
+}
+
+unsigned gen_exp(unsigned number_index, unsigned exp_index, int exponent_num) {
+	// res = 1
+	int res = take_reg();
+	code("\n\t\tMOV \t$1,");
+	gen_sym_name(res);
+	set_type(res, UINT);
+	
+        code("\n@for_init%d:", exponent_num);
+        // i = exp_index
+        int i = take_reg();
+        gen_mov(exp_index, i);
+        
+        // if i > 0: end
+        code("\n@for_test%d:\n\t", exponent_num);
+        code("\tCMPU \t");
+        gen_sym_name(i);
+        code(",$0");
+        code("\n\t\tJLEU \t@for_end%d", exponent_num);
+        
+        // else: res *= value(number_index)
+        code("\n@for_body%d:", exponent_num);
+        code("\n\t\tMULU\t");
+        gen_sym_name(res);
+        code(",");
+        gen_sym_name(number_index);
+        code(",");
+        gen_sym_name(res);
+                
+        // i--        
+        code("\n@for_dec%d:\n\t", exponent_num);
+        code("\tSUBU \t");
+        gen_sym_name(i);
+        code(",$1,");
+        gen_sym_name(i);
+        code("\n\t\tJMP \t@for_test%d", exponent_num);
+        
+        code("\n@for_end%d:", exponent_num);
+
         return res;
 }
 
 int gen_abs(int exp_index, int abs_num) {
 	int exp = take_reg();
-	set_type(exp, INT);
+	set_type(exp, get_type(exp_index));
 	gen_mov(exp_index, exp);
 	
 	code("\n\t\tCMPS \t");

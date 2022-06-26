@@ -26,9 +26,12 @@ int gen_arop(int op1_index, int operation, int op2_index);
 int gen_abs(int exp_index, int abs_num);
 
 // generisanje modula
-int gen_mod(int number_index, int modul_index, int mod_num);
+unsigned gen_mod(unsigned number_index, unsigned modul_index, int mod_num);
 
 // generisanje faktorijela
-unsigned gen_fac(int number_index, int fac_num);
+unsigned gen_fac(unsigned number_index, int fac_num);
+
+// generisanje faktorijela
+unsigned gen_exp(unsigned number_index, unsigned exp_index, int exponent_num);
 
 #endif
