@@ -10,7 +10,7 @@ main:
 		CMPS 	%1,$0
 		JLES 	@while_end1
 @while_body1:
-		SUBU 	%0,$20,%0
+		SUBS 	%0,$20,%0
 		JMP 	@while_test1
 @while_end1:
 	

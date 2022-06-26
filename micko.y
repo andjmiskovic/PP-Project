@@ -38,13 +38,13 @@
 %token <s> _ID
 %token <s> _INT_NUMBER
 %token <s> _UINT_NUMBER
+%token _ABS
 %token _LPAREN
 %token _RPAREN
 %token _LBRACKET
 %token _RBRACKET
 %token _ASSIGN
 %token _SEMICOLON
-%token _ABS
 %token _MOD
 %token _EXP
 %token _FAC
@@ -157,12 +157,12 @@ assignment_statement
         int idx = lookup_symbol($1, VAR|PAR);
         if(idx == NO_INDEX)
           err("invalid value '%s' in assignment", $1);
-        else
+        /*else
           if(get_type(idx) != get_type($3)) {
             err("incompatible types in assignment");
             err("%d",get_type(idx));
             err("%d", get_type($3));
-          }
+          }*/
         gen_mov($3, idx);
       }
   ;
@@ -171,18 +171,13 @@ num_exp
   : math_exp
   | num_exp _AROP math_exp
       {
-        if(get_type($1) != get_type($3))
-          err("invalid operands: arithmetic operation");
+        /*if(get_type($1) != get_type($3))
+          err("invalid operands: arithmetic operation");*/
         
         $$ = gen_arop($1, $2, $3);
       }
   | num_exp _MOD math_exp
-    {
-	if(get_type($1) != 2)
-	  err("invalid type: cannot be signed");
-	if(get_type($3) != 2)
-	  err("invalid type: cannot be signed");
-	          
+    {	          
 	mod_num++;
 	$$ = gen_mod($1, $3, mod_num);
     }
@@ -192,9 +187,8 @@ math_exp
   : exp
   | math_exp _MATOP exp
       {
-        if(get_type($1) != get_type($3))
-          err("invalid operands: mathematics operation");
-        
+        /*if(get_type($1) != get_type($3))
+          err("invalid operands: mathematics operation");*/
         $$ = gen_arop($1, $2, $3);
       }
   ;
@@ -229,15 +223,11 @@ exponent_exp
       } 
   | exponent_exp _EXP literal
   {
-  	if(get_type($3) != 2)
-	  err("invalid type: cannot be signed");
 	exponent_num++;
 	$$ = gen_exp($1, $3, exponent_num);
   }
   | exponent_exp _FAC
   {
-  	if(get_type($1) != 2)
-	  err("invalid type: cannot be signed");
 	fac_num++;
 	$$ = gen_fac($1, fac_num);
   }
@@ -325,8 +315,8 @@ rel_exp
 return_statement
   : _RETURN num_exp _SEMICOLON
       {
-        if(get_type(fun_idx) != get_type($2))
-          err("incompatible types in return");
+        /*if(get_type(fun_idx) != get_type($2))
+          err("incompatible types in return");*/
         gen_mov($2, FUN_REG);
         code("\n\t\tJMP \t@%s_exit", get_name(fun_idx));        
       }

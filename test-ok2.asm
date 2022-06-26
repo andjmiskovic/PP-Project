@@ -4,23 +4,21 @@ main:
 		MOV 	%15,%14
 		SUBS	%15,$4,%15
 @main_body:
-		MOV 	$2,%0
-		CMPS 	%0, $0
-		JLTS 	@negative1
-		JMP 	@positive1
-@negative1:
-		DIVS 	%0, $-1, %0
-@positive1:
-		MOV 	%0,-4(%14)
-		MOV 	$-5,%0
-		CMPS 	%0, $0
-		JLTS 	@negative2
-		JMP 	@positive2
-@negative2:
-		DIVS 	%0, $-1, %0
-@positive2:
-		ADDS	-4(%14),%0,%0
-		MOV 	%0,-4(%14)
+		ADDU	$11,$6,%0
+		MOV 	%0,%1
+		MOV 	%0,%2
+@while_test1:
+		SUBS 	%2,$5,%2
+		CMPS 	%2,$0
+		JLES 	@while_end1
+@while_body1:
+		SUBS 	%1,$5,%1
+		JMP 	@while_test1
+@while_end1:
+	
+		MOV 	%1,-4(%14)
+		MOV 	-4(%14),%13
+		JMP 	@main_exit
 @main_exit:
 		MOV 	%14,%15
 		POP 	%14

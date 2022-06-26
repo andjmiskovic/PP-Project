@@ -18,6 +18,7 @@
 
 "("                  { return _LPAREN; }
 ")"                  { return _RPAREN; }
+"|"                  { return _ABS; }
 "{"                  { return _LBRACKET; }
 "}"                  { return _RBRACKET; }
 ";"                  { return _SEMICOLON; }
@@ -30,7 +31,6 @@
 
 "%"                  { return _MOD; }
 "^"                  { return _EXP; }
-"|"                  { return _ABS; }
 "!"                  { return _FAC; }
 
 "<"                  { yylval.i = LT; return _RELOP; }

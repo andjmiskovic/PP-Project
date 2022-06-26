@@ -384,9 +384,9 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[76] =
     {   0,
-        0,    0,   33,   31,    1,    1,   20,   17,    7,    8,
-       15,   13,   14,   16,   28,   11,   21,   12,   22,   27,
-       18,   27,   27,   27,   27,    9,   19,   10,    1,   26,
+        0,    0,   33,   31,    1,    1,   20,   18,    7,    8,
+       16,   14,   15,   17,   28,   12,   21,   13,   22,   27,
+       19,   27,   27,   27,   27,   10,    9,   11,    1,   26,
        28,   30,   28,   29,   23,   25,   24,   27,   27,    4,
        27,   27,   27,   28,   30,   28,   27,    2,   27,   27,
        28,   28,    5,   27,   27,   28,   28,   27,   27,   28,
@@ -854,57 +854,57 @@ YY_RULE_SETUP
 case 9:
 YY_RULE_SETUP
 #line 21 "micko.l"
-{ return _LBRACKET; }
+{ return _ABS; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 22 "micko.l"
-{ return _RBRACKET; }
+{ return _LBRACKET; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 23 "micko.l"
-{ return _SEMICOLON; }
+{ return _RBRACKET; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 24 "micko.l"
-{ return _ASSIGN; }
+{ return _SEMICOLON; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 26 "micko.l"
-{ yylval.i = ADD; return _AROP; }
+#line 25 "micko.l"
+{ return _ASSIGN; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 27 "micko.l"
-{ yylval.i = SUB; return _AROP; }
+{ yylval.i = ADD; return _AROP; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 28 "micko.l"
-{ yylval.i = MUL; return _MATOP; }
+{ yylval.i = SUB; return _AROP; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 29 "micko.l"
-{ yylval.i = DIV; return _MATOP; }
+{ yylval.i = MUL; return _MATOP; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 31 "micko.l"
-{ return _MOD; }
+#line 30 "micko.l"
+{ yylval.i = DIV; return _MATOP; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 32 "micko.l"
-{ return _EXP; }
+{ return _MOD; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 33 "micko.l"
-{ return _ABS; }
+{ return _EXP; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
