@@ -5,7 +5,7 @@ int main() {
     unsigned b;
     
     a = 15;
-    b = 3;
+    b = 3u;
     
     return a * b;
 }

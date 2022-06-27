@@ -18,7 +18,6 @@
 
 "("                  { return _LPAREN; }
 ")"                  { return _RPAREN; }
-"|"                  { return _ABS; }
 "{"                  { return _LBRACKET; }
 "}"                  { return _RBRACKET; }
 ";"                  { return _SEMICOLON; }
@@ -29,6 +28,7 @@
 "*"                  { yylval.i = MUL; return _MATOP; }
 "/"                  { yylval.i = DIV; return _MATOP; }
 
+"|"                  { return _ABS; }
 "%"                  { return _MOD; }
 "^"                  { return _EXP; }
 "!"                  { return _FAC; }

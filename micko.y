@@ -157,12 +157,10 @@ assignment_statement
         int idx = lookup_symbol($1, VAR|PAR);
         if(idx == NO_INDEX)
           err("invalid value '%s' in assignment", $1);
-        /*else
-          if(get_type(idx) != get_type($3)) {
+        else
+          if(get_type(idx) == 2 && get_type($3) == 1) {
             err("incompatible types in assignment");
-            err("%d",get_type(idx));
-            err("%d", get_type($3));
-          }*/
+          }
         gen_mov($3, idx);
       }
   ;
@@ -170,10 +168,7 @@ assignment_statement
 num_exp
   : math_exp
   | num_exp _AROP math_exp
-      {
-        /*if(get_type($1) != get_type($3))
-          err("invalid operands: arithmetic operation");*/
-        
+      {        
         $$ = gen_arop($1, $2, $3);
       }
   | num_exp _MOD math_exp
@@ -187,8 +182,6 @@ math_exp
   : exp
   | math_exp _MATOP exp
       {
-        /*if(get_type($1) != get_type($3))
-          err("invalid operands: mathematics operation");*/
         $$ = gen_arop($1, $2, $3);
       }
   ;
@@ -211,22 +204,18 @@ exp
 	fac_num++;
 	$$ = gen_fac($1, fac_num);
       }
-  
   | _ABS num_exp _ABS
       { 
         abs_num++;
 	$$ = gen_abs($2, abs_num);
       }
-
   | function_call
       {
         $$ = take_reg();
         gen_mov(FUN_REG, $$);
       }
-  
   | _LPAREN num_exp _RPAREN
       { $$ = $2; }
-      
   ;
   
 literal

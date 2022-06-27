@@ -101,6 +101,16 @@ unsigned gen_mod(unsigned number_index, unsigned modul_index, int mod_num) {
 	gen_sym_name(res);
 	set_type(res, UINT);	
 	
+	code("\n\t\tCMPS \t");
+        gen_sym_name(number_index);
+        code(",$0");
+        code("\n\t\tJLES \t@while_end%d", mod_num);
+        
+        code("\n\t\tCMPS \t");
+        gen_sym_name(modul_index);
+        code(",$0");
+        code("\n\t\tJLES \t@while_end%d", mod_num);
+	
 	// i = number
         int i = take_reg();
         gen_mov(number_index, i);
@@ -131,16 +141,7 @@ unsigned gen_mod(unsigned number_index, unsigned modul_index, int mod_num) {
         code(",");
         gen_sym_name(res);
         
-        code("\n\t\tJMP \t@while_test%d", mod_num);
-        
-        /*code("\n@check_zero%d:\n\t", mod_num);
-        
-        // provera ako je mod 0
-        gen_cmp(res, number_index);
-        code("\n\t\tJGES \t@while_end%d", mod_num);
-        code("\n\t\tMOV \t$0,");
-        gen_sym_name(res);*/
-        
+        code("\n\t\tJMP \t@while_test%d", mod_num);        
         code("\n@while_end%d:\n\t", mod_num);
         
         return res;
@@ -152,6 +153,11 @@ unsigned gen_fac(unsigned number_index, int fac_num) {
 	code("\n\t\tMOV \t$1,");
 	gen_sym_name(res);
 	set_type(res, UINT);
+	
+	code("\n\t\tCMPS \t");
+        gen_sym_name(number_index);
+        code(",$1");
+        code("\n\t\tJLES \t@for_fac_end%d", fac_num);
 	
         code("\n@for_fac_init%d:", fac_num);
         // i = number
